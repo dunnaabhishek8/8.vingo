@@ -26,7 +26,7 @@ import { linkWithCredential } from 'firebase/auth'
 import { setSocket } from './redux/userSlice'
 import { io } from 'socket.io-client'
 
-export const serverUrl = "http://localhost:8000"
+export const serverUrl = "https://vingo-backend-b2sf.onrender.com"
 function App() { 
   const { userData } = useSelector(state => state.user)
   const dispatch = useDispatch()
