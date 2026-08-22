@@ -29,7 +29,7 @@ function DeliveryBoyTracking({ data }) {
     const center = [deliveryBoyLat, deliveryBoylon]
 
     return (
-        <div className='w-full h-[400px] mt-3 rounded-xl overflow-hidden shadow-md'>
+        <div className='w-full h-[400px] mt-3 rounded-2xl overflow-hidden ring-1 ring-black/10 shadow-soft relative z-0'>
             <MapContainer
                 className={"w-full h-full"}
                 center={center}
@@ -43,11 +43,11 @@ function DeliveryBoyTracking({ data }) {
              <Popup>Delivery Boy</Popup>
              </Marker>
               <Marker position={[customerLat,customerlon]} icon={customerIcon}>
-             <Popup>Delivery Boy</Popup>
+             <Popup>Customer</Popup>
              </Marker>
 
 
-<Polyline positions={path} color='blue' weight={4}/>
+<Polyline positions={path} pathOptions={{color:'#ff4d2d', weight:4}}/>
 
             </MapContainer>
         </div>

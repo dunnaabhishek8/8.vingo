@@ -21,37 +21,39 @@ const dispatch=useDispatch()
     }
 
 
-  
+
     return (
-        <div className='bg-white rounded-lg shadow p-4 space-y-4'>
-            <div>
-                <h2 className='text-lg font-semibold text-gray-800'>{data.user.fullName}</h2>
-                <p className='text-sm text-gray-500'>{data.user.email}</p>
-                <p className='flex items-center gap-2 text-sm text-gray-600 mt-1'><MdPhone /><span>{data.user.mobile}</span></p>
-                {data.paymentMethod=="online"?<p className='gap-2 text-sm text-gray-600'>payment: {data.payment?"true":"false"}</p>:<p className='gap-2 text-sm text-gray-600'>Payment Method: {data.paymentMethod}</p>}
-                
+        <div className='bg-white rounded-2xl shadow-soft border border-black/[0.05] p-4 sm:p-5 space-y-4'>
+            <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3'>
+                <div>
+                    <h2 className='text-lg font-bold text-ink-900'>{data.user.fullName}</h2>
+                    <p className='text-sm text-ink-500'>{data.user.email}</p>
+                    <p className='flex items-center gap-2 text-sm text-ink-700 mt-1.5'><span className='h-7 w-7 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center'><MdPhone size={14}/></span><span>{data.user.mobile}</span></p>
+                    {data.paymentMethod=="online"?<p className='mt-1.5 text-sm text-ink-500'>Payment: <span className={data.payment?"font-semibold text-green-600":"font-semibold text-red-500"}>{data.payment?"Paid":"Pending"}</span></p>:<p className='mt-1.5 text-sm text-ink-500'>Payment Method: <span className='font-semibold text-ink-700 uppercase'>{data.paymentMethod}</span></p>}
+
+                </div>
+
+                <div className='flex items-start flex-col gap-1.5 text-ink-700 text-sm bg-gray-50 rounded-xl p-3 sm:max-w-[55%]'>
+                    <p className='font-medium'>{data?.deliveryAddress?.text}</p>
+                    <p className='text-xs text-ink-400'>Lat: {data?.deliveryAddress.latitude} , Lon {data?.deliveryAddress.longitude}</p>
+                </div>
             </div>
 
-            <div className='flex items-start flex-col gap-2 text-gray-600 text-sm'>
-                <p>{data?.deliveryAddress?.text}</p>
-                <p className='text-xs text-gray-500'>Lat: {data?.deliveryAddress.latitude} , Lon {data?.deliveryAddress.longitude}</p>
-            </div>
-
-            <div className='flex space-x-4 overflow-x-auto pb-2'>
+            <div className='flex space-x-3 overflow-x-auto no-scrollbar pb-1'>
                 {data.shopOrders.shopOrderItems.map((item, index) => (
-                    <div key={index} className='flex-shrink-0 w-40 border rounded-lg p-2 bg-white"'>
-                        <img src={item.item.image} alt="" className='w-full h-24 object-cover rounded' />
-                        <p className='text-sm font-semibold mt-1'>{item.name}</p>
-                        <p className='text-xs text-gray-500'>Qty: {item.quantity} x ₹{item.price}</p>
+                    <div key={index} className='flex-shrink-0 w-36 rounded-xl border border-black/[0.05] p-2 bg-white shadow-sm'>
+                        <img src={item.item.image} alt={item.name} className='w-full h-24 object-cover rounded-lg' />
+                        <p className='text-sm font-semibold mt-1.5 truncate'>{item.name}</p>
+                        <p className='text-xs text-ink-500'>Qty: {item.quantity} × ₹{item.price}</p>
                     </div>
                 ))}
             </div>
 
-<div className='flex justify-between items-center mt-auto pt-3 border-t border-gray-100'>
-<span className='text-sm'>status: <span className='font-semibold capitalize text-[#ff4d2d]'>{data.shopOrders.status}</span>
+<div className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mt-auto pt-3 border-t border-gray-100'>
+<span className='text-sm text-ink-500'>Status: <span className='inline-block rounded-full bg-brand-50 text-brand-600 px-2.5 py-0.5 text-xs font-bold capitalize'>{data.shopOrders.status}</span>
 </span>
 
-<select  className='rounded-md border px-3 py-1 text-sm focus:outline-none focus:ring-2 border-[#ff4d2d] text-[#ff4d2d]' onChange={(e)=>handleUpdateStatus(data._id,data.shopOrders.shop._id,e.target.value)}>
+<select aria-label="Update order status" className='rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-ink-700 focus:outline-none focus:ring-4 focus:ring-brand-100 focus:border-brand-400 transition cursor-pointer' onChange={(e)=>handleUpdateStatus(data._id,data.shopOrders.shop._id,e.target.value)}>
     <option value="">Change</option>
 <option value="pending">Pending</option>
 <option value="preparing">Preparing</option>
@@ -60,17 +62,17 @@ const dispatch=useDispatch()
 
 </div>
 
-{data.shopOrders.status=="out of delivery" && 
-<div className="mt-3 p-2 border rounded-lg text-sm bg-orange-50 gap-4">
-    {data.shopOrders.assignedDeliveryBoy?<p>Assigned Delivery Boy:</p>:<p>Available Delivery Boys:</p>}
+{data.shopOrders.status=="out of delivery" &&
+<div className="mt-1 p-3 rounded-xl border border-brand-100 bg-brand-50/60 text-sm space-y-1.5">
+    <p className='font-semibold text-ink-700'>{data.shopOrders.assignedDeliveryBoy?"Assigned Delivery Boy:":"Available Delivery Boys:"}</p>
    {availableBoys?.length>0?(
      availableBoys.map((b,index)=>(
-        <div className='text-gray-800'>{b.fullName}-{b.mobile}</div>
+        <div key={index} className='text-ink-700'><span className='font-medium'>{b.fullName}</span> · {b.mobile}</div>
      ))
-   ):data.shopOrders.assignedDeliveryBoy?<div>{data.shopOrders.assignedDeliveryBoy.fullName}-{data.shopOrders.assignedDeliveryBoy.mobile}</div>:<div>Waiting for delivery boy to accept</div>}
+   ):data.shopOrders.assignedDeliveryBoy?<div className='text-ink-700'><span className='font-medium'>{data.shopOrders.assignedDeliveryBoy.fullName}</span> · {data.shopOrders.assignedDeliveryBoy.mobile}</div>:<div className='text-ink-400'>Waiting for delivery boy to accept…</div>}
 </div>}
 
-<div className='text-right font-bold text-gray-800 text-sm'>
+<div className='text-right font-extrabold text-ink-900 text-base'>
  Total: ₹{data.shopOrders.subtotal}
 </div>
         </div>

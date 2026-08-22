@@ -66,7 +66,7 @@ setRightButton(element.scrollLeft+element.clientWidth<element.scrollWidth)
       shopScrollRef.current.addEventListener('scroll',()=>{
          updateButton(shopScrollRef,setShowLeftShopButton,setShowRightShopButton)
       })
-     
+
     }
 
     return ()=>{cateScrollRef?.current?.removeEventListener("scroll",()=>{
@@ -80,67 +80,68 @@ setRightButton(element.scrollLeft+element.clientWidth<element.scrollWidth)
 
 
   return (
-    <div className='w-screen min-h-screen flex flex-col gap-5 items-center bg-[#fff9f6] overflow-y-auto'>
+    <div className='w-screen min-h-screen flex flex-col gap-10 items-center bg-cream pb-20'>
       <Nav />
 
       {searchItems && searchItems.length>0 && (
-        <div className='w-full max-w-6xl flex flex-col gap-5 items-start p-5 bg-white shadow-md rounded-2xl mt-4'>
-<h1 className='text-gray-900 text-2xl sm:text-3xl font-semibold border-b border-gray-200 pb-2'>
-  Search Results
-</h1>
-<div className='w-full h-auto flex flex-wrap gap-6 justify-center'>
-  {searchItems.map((item)=>(
-    <FoodCard data={item} key={item._id}/>
-  ))}
-</div>
+        <div className='w-full max-w-6xl px-4 sm:px-6 flex flex-col gap-5 items-start'>
+          <div className='w-full bg-white shadow-soft rounded-3xl border border-black/[0.05] p-5 sm:p-6 animate-fade-up'>
+            <h1 className='text-xl sm:text-2xl font-extrabold tracking-tight text-ink-900 border-b border-gray-100 pb-3 mb-5'>
+              Search Results
+            </h1>
+            <div className='w-full flex flex-wrap gap-5 justify-center'>
+              {searchItems.map((item)=>(
+                <FoodCard data={item} key={item._id}/>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
-      <div className="w-full max-w-6xl flex flex-col gap-5 items-start p-[10px]">
-
-        <h1 className='text-gray-800 text-2xl sm:text-3xl'>Inspiration for your first order</h1>
+      <div className="w-full max-w-6xl px-4 sm:px-6 flex flex-col gap-5 items-start">
+        <h1 className='text-xl sm:text-2xl font-extrabold tracking-tight text-ink-900'>Inspiration for your first order</h1>
         <div className='w-full relative'>
-          {showLeftCateButton &&  <button className='absolute left-0 top-1/2 -translate-y-1/2 bg-[#ff4d2d] text-white p-2 rounded-full shadow-lg hover:bg-[#e64528] z-10' onClick={()=>scrollHandler(cateScrollRef,"left")}><FaCircleChevronLeft />
+          {showLeftCateButton &&  <button aria-label="Scroll left" className='absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white shadow-card ring-1 ring-black/[0.06] text-ink-700 hover:text-brand-600 hover:scale-105 transition flex items-center justify-center' onClick={()=>scrollHandler(cateScrollRef,"left")}><FaCircleChevronLeft size={18}/>
           </button>}
-         
 
-          <div className='w-full flex overflow-x-auto gap-4 pb-2 ' ref={cateScrollRef}>
+
+          <div className='w-full flex overflow-x-auto no-scrollbar gap-4 pb-1 scroll-smooth' ref={cateScrollRef}>
             {categories.map((cate, index) => (
               <CategoryCard name={cate.category} image={cate.image} key={index} onClick={()=>handleFilterByCategory(cate.category)}/>
             ))}
           </div>
-          {showRightCateButton &&  <button className='absolute right-0 top-1/2 -translate-y-1/2 bg-[#ff4d2d] text-white p-2 rounded-full shadow-lg hover:bg-[#e64528] z-10' onClick={()=>scrollHandler(cateScrollRef,"right")}>
-<FaCircleChevronRight />
+          {showRightCateButton &&  <button aria-label="Scroll right" className='absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white shadow-card ring-1 ring-black/[0.06] text-ink-700 hover:text-brand-600 hover:scale-105 transition flex items-center justify-center' onClick={()=>scrollHandler(cateScrollRef,"right")}>
+<FaCircleChevronRight size={18}/>
           </button>}
-         
+
         </div>
       </div>
 
-      <div className='w-full max-w-6xl flex flex-col gap-5 items-start p-[10px]'>
- <h1 className='text-gray-800 text-2xl sm:text-3xl'>Best Shop in {currentCity}</h1>
- <div className='w-full relative'>
-          {showLeftShopButton &&  <button className='absolute left-0 top-1/2 -translate-y-1/2 bg-[#ff4d2d] text-white p-2 rounded-full shadow-lg hover:bg-[#e64528] z-10' onClick={()=>scrollHandler(shopScrollRef,"left")}><FaCircleChevronLeft />
+      <div className='w-full max-w-6xl px-4 sm:px-6 flex flex-col gap-5 items-start'>
+       <h1 className='text-xl sm:text-2xl font-extrabold tracking-tight text-ink-900'>Best Shop in {currentCity}</h1>
+       <div className='w-full relative'>
+          {showLeftShopButton &&  <button aria-label="Scroll left" className='absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white shadow-card ring-1 ring-black/[0.06] text-ink-700 hover:text-brand-600 hover:scale-105 transition flex items-center justify-center' onClick={()=>scrollHandler(shopScrollRef,"left")}><FaCircleChevronLeft size={18}/>
           </button>}
-         
 
-          <div className='w-full flex overflow-x-auto gap-4 pb-2 ' ref={shopScrollRef}>
+
+          <div className='w-full flex overflow-x-auto no-scrollbar gap-4 pb-1 scroll-smooth' ref={shopScrollRef}>
             {shopInMyCity?.map((shop, index) => (
               <CategoryCard name={shop.name} image={shop.image} key={index} onClick={()=>navigate(`/shop/${shop._id}`)}/>
             ))}
           </div>
-          {showRightShopButton &&  <button className='absolute right-0 top-1/2 -translate-y-1/2 bg-[#ff4d2d] text-white p-2 rounded-full shadow-lg hover:bg-[#e64528] z-10' onClick={()=>scrollHandler(shopScrollRef,"right")}>
-<FaCircleChevronRight />
+          {showRightShopButton &&  <button aria-label="Scroll right" className='absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white shadow-card ring-1 ring-black/[0.06] text-ink-700 hover:text-brand-600 hover:scale-105 transition flex items-center justify-center' onClick={()=>scrollHandler(shopScrollRef,"right")}>
+<FaCircleChevronRight size={18}/>
           </button>}
-         
+
         </div>
       </div>
 
-      <div className='w-full max-w-6xl flex flex-col gap-5 items-start p-[10px]'>
-       <h1 className='text-gray-800 text-2xl sm:text-3xl'>
+      <div className='w-full max-w-6xl px-4 sm:px-6 flex flex-col gap-5 items-start'>
+       <h1 className='text-xl sm:text-2xl font-extrabold tracking-tight text-ink-900'>
         Suggested Food Items
        </h1>
 
-<div className='w-full h-auto flex flex-wrap gap-[20px] justify-center'>
+<div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 justify-items-center'>
 {updatedItemsList?.map((item,index)=>(
   <FoodCard key={index} data={item}/>
 ))}

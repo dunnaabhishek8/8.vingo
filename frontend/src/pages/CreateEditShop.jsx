@@ -32,10 +32,10 @@ function CreateEditShop() {
         setLoading(true)
         try {
            const formData=new FormData()
-           formData.append("name",name) 
-           formData.append("city",city) 
-           formData.append("state",state) 
-           formData.append("address",address) 
+           formData.append("name",name)
+           formData.append("city",city)
+           formData.append("state",state)
+           formData.append("address",address)
            if(backendImage){
             formData.append("image",backendImage)
            }
@@ -49,61 +49,62 @@ function CreateEditShop() {
         }
        }
     return (
-        <div className='flex justify-center flex-col items-center p-6 bg-gradient-to-br from-orange-50 relative to-white min-h-screen'>
-            <div className='absolute top-[20px] left-[20px] z-[10] mb-[10px]' onClick={() => navigate("/")}>
-                <IoIosArrowRoundBack size={35} className='text-[#ff4d2d]' />
-            </div>
+        <div className='flex justify-center flex-col items-center p-4 sm:p-6 bg-gradient-to-b from-brand-50 via-cream to-cream min-h-screen'>
+            <button aria-label="Go back" className='absolute top-5 left-5 z-10 h-11 w-11 rounded-full bg-white shadow-soft ring-1 ring-black/[0.06] text-brand-600 hover:bg-brand-50 transition flex items-center justify-center cursor-pointer' onClick={() => navigate("/")}>
+                <IoIosArrowRoundBack size={24} />
+            </button>
 
-            <div className='max-w-lg w-full bg-white shadow-xl rounded-2xl p-8 border border-orange-100'>
-                <div className='flex flex-col items-center mb-6'>
-                    <div className='bg-orange-100 p-4 rounded-full mb-4'>
-                        <FaUtensils className='text-[#ff4d2d] w-16 h-16' />
+            <div className='max-w-lg w-full bg-white rounded-3xl shadow-card border border-black/[0.05] p-6 sm:p-8 animate-fade-up'>
+                <div className='flex flex-col items-center mb-7'>
+                    <div className='h-16 w-16 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white flex items-center justify-center shadow-lg shadow-brand-500/30 mb-4'>
+                        <FaUtensils size={24} />
                     </div>
-                    <div className="text-3xl font-extrabold text-gray-900">
+                    <div className="text-2xl sm:text-3xl font-extrabold tracking-tight text-ink-900">
                         {myShopData ? "Edit Shop" : "Add Shop"}
                     </div>
+                    <p className='text-sm text-ink-400 mt-1'>{myShopData ? "Update your restaurant details" : "Tell us about your restaurant"}</p>
                 </div>
                 <form className='space-y-5' onSubmit={handleSubmit}>
                     <div>
-                        <label className='block text-sm font-medium text-gray-700 mb-1'>Name</label>
-                        <input type="text" placeholder='Enter Shop Name' className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500'
+                        <label className='block text-sm font-semibold text-ink-700 mb-1.5'>Name</label>
+                        <input type="text" placeholder='Enter Shop Name' className='w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition placeholder:text-ink-400 focus:border-brand-400 focus:ring-4 focus:ring-brand-100'
                         onChange={(e)=>setName(e.target.value)}
                         value={name}
                         />
                     </div>
                     <div>
-                        <label className='block text-sm font-medium text-gray-700 mb-1'>shop Image</label>
-                        <input type="file" accept='image/*' className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500' onChange={handleImage}  />
-                        {frontendImage &&   <div className='mt-4'>
-                            <img src={frontendImage} alt="" className='w-full h-48 object-cover rounded-lg border'/>
+                        <label className='block text-sm font-semibold text-ink-700 mb-1.5'>Shop Image</label>
+                        <input type="file" accept='image/*' className='w-full rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-3 text-sm text-ink-500 cursor-pointer transition hover:border-brand-300 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-500 file:px-4 file:py-2 file:text-white file:text-xs file:font-bold file:cursor-pointer' onChange={handleImage}  />
+                        {frontendImage &&   <div className='mt-4 rounded-2xl overflow-hidden ring-1 ring-black/[0.06]'>
+                            <img src={frontendImage} alt="Shop preview" className='w-full h-48 object-cover'/>
                         </div>}
-                      
+
                     </div>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <div>
-                           <label className='block text-sm font-medium text-gray-700 mb-1'>City</label>
-                        <input type="text" placeholder='City' className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500' onChange={(e)=>setCity(e.target.value)}
-                        value={city}/> 
+                           <label className='block text-sm font-semibold text-ink-700 mb-1.5'>City</label>
+                        <input type="text" placeholder='City' className='w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition placeholder:text-ink-400 focus:border-brand-400 focus:ring-4 focus:ring-brand-100' onChange={(e)=>setCity(e.target.value)}
+                        value={city}/>
                         </div>
                         <div>
-                            <label className='block text-sm font-medium text-gray-700 mb-1'>State</label>
-                        <input type="text" placeholder='State' className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500' onChange={(e)=>setState(e.target.value)}
-                        value={state}/> 
+                            <label className='block text-sm font-semibold text-ink-700 mb-1.5'>State</label>
+                        <input type="text" placeholder='State' className='w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition placeholder:text-ink-400 focus:border-brand-400 focus:ring-4 focus:ring-brand-100' onChange={(e)=>setState(e.target.value)}
+                        value={state}/>
                         </div>
                     </div>
                     <div>
-                        <label className='block text-sm font-medium text-gray-700 mb-1'>Address</label>
-                        <input type="text" placeholder='Enter Shop Address' className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500' onChange={(e)=>setAddress(e.target.value)}
-                        value={address}/> 
+                        <label className='block text-sm font-semibold text-ink-700 mb-1.5'>Address</label>
+                        <input type="text" placeholder='Enter Shop Address' className='w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition placeholder:text-ink-400 focus:border-brand-400 focus:ring-4 focus:ring-brand-100' onChange={(e)=>setAddress(e.target.value)}
+                        value={address}/>
                     </div>
-                    <button className='w-full bg-[#ff4d2d] text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-orange-600 hover:shadow-lg transition-all duration-200 cursor-pointer' disabled={loading}>
+                    <button className='w-full h-12 rounded-2xl bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold shadow-lg shadow-brand-500/25 hover:from-brand-600 hover:to-brand-700 active:scale-[0.99] transition flex items-center justify-center disabled:opacity-60' disabled={loading}>
                         {loading?<ClipLoader size={20} color='white'/>:"Save"}
-                    
+
                     </button>
                 </form>
             </div>
-                
-                
+
+
 
         </div>
     )

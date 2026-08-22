@@ -36,49 +36,49 @@ function UserOrderCard({ data }) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 space-y-4">
-      <div className="flex justify-between border-b pb-2">
+    <div className="bg-white rounded-2xl shadow-soft border border-black/[0.05] p-4 sm:p-5 space-y-4">
+      <div className="flex justify-between gap-3 border-b border-gray-100 pb-3">
         <div>
-          <p className="font-semibold">
+          <p className="font-extrabold text-ink-900">
             Order #{data?._id?.slice(-6)}
           </p>
 
-          <p className="text-sm text-gray-500">
-            Date: {formatDate(data.createdAt)}
+          <p className="text-sm text-ink-400 mt-0.5">
+            {formatDate(data.createdAt)}
           </p>
         </div>
 
-        <div className="text-right">
+        <div className="text-right space-y-1.5">
           {data.paymentMethod === "cod" ? (
-            <p className="text-sm text-gray-500">
-              {data.paymentMethod?.toUpperCase()}
+            <p className="text-xs font-bold uppercase tracking-wide text-ink-500">
+              {data.paymentMethod}
             </p>
           ) : (
-            <p className="text-sm text-gray-500 font-semibold">
-              Payment: {data.payment ? "Paid" : "Pending"}
+            <p className="text-xs font-bold uppercase tracking-wide text-ink-500">
+              Payment: <span className={data.payment ? "text-green-600" : "text-red-500"}>{data.payment ? "Paid" : "Pending"}</span>
             </p>
           )}
 
-          <p className="font-medium text-blue-600">
+          <span className="inline-block rounded-full bg-brand-50 text-brand-600 px-2.5 py-0.5 text-xs font-bold capitalize">
             {data.shopOrders?.[0]?.status || "Pending"}
-          </p>
+          </span>
         </div>
       </div>
 
       {data.shopOrders?.map((shopOrder, index) => (
         <div
-          className="border rounded-lg p-3 bg-[#fffaf7] space-y-3"
+          className="rounded-2xl border border-brand-100 bg-brand-50/40 p-3.5 space-y-3"
           key={index}
         >
-          <p className="font-semibold">
+          <p className="font-bold text-ink-900">
             {shopOrder.shop?.name || "Restaurant unavailable"}
           </p>
 
-          <div className="flex space-x-4 overflow-x-auto pb-2">
+          <div className="flex space-x-3 overflow-x-auto no-scrollbar pb-1">
             {shopOrder.shopOrderItems?.map((item, idx) => (
               <div
                 key={idx}
-                className="flex-shrink-0 w-40 border rounded-lg p-2 bg-white"
+                className="flex-shrink-0 w-36 rounded-xl border border-black/[0.05] p-2 bg-white shadow-sm"
               >
                 <img
                   src={
@@ -87,14 +87,14 @@ function UserOrderCard({ data }) {
                     "https://via.placeholder.com/150"
                   }
                   alt={item.name}
-                  className="w-full h-24 object-cover rounded"
+                  className="w-full h-24 object-cover rounded-lg"
                 />
 
-                <p className="text-sm font-semibold mt-1">
+                <p className="text-sm font-semibold mt-1.5 truncate">
                   {item.name}
                 </p>
 
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-ink-500">
                   Qty: {item.quantity} × ₹{item.price}
                 </p>
 
@@ -103,10 +103,11 @@ function UserOrderCard({ data }) {
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
-                        className={`text-lg ${
+                        aria-label={`Rate ${star} star`}
+                        className={`text-xl leading-none transition-transform hover:scale-110 ${
                           (selectedRating[item.item?._id] || 0) >= star
-                            ? "text-yellow-400"
-                            : "text-gray-400"
+                            ? "text-amber-400"
+                            : "text-gray-300 hover:text-amber-300"
                         }`}
                         onClick={() =>
                           handleRating(item.item?._id, star)
@@ -121,25 +122,25 @@ function UserOrderCard({ data }) {
             ))}
           </div>
 
-          <div className="flex justify-between items-center border-t pt-2">
-            <p className="font-semibold">
+          <div className="flex justify-between items-center border-t border-brand-100 pt-2.5">
+            <p className="font-bold text-ink-900">
               Subtotal: ₹{shopOrder.subtotal}
             </p>
 
-            <span className="text-sm font-medium text-blue-600">
+            <span className="inline-block rounded-full bg-white text-brand-600 border border-brand-100 px-2.5 py-0.5 text-xs font-bold capitalize">
               {shopOrder.status}
             </span>
           </div>
         </div>
       ))}
 
-      <div className="flex justify-between items-center border-t pt-2">
-        <p className="font-semibold">
+      <div className="flex justify-between items-center border-t border-gray-100 pt-3">
+        <p className="font-extrabold text-ink-900 text-lg">
           Total: ₹{data.totalAmount}
         </p>
 
         <button
-          className="bg-[#ff4d2d] hover:bg-[#e64526] text-white px-4 py-2 rounded-lg text-sm"
+          className="bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-brand-500/25 active:scale-95 transition"
           onClick={() => navigate(`/track-order/${data._id}`)}
         >
           Track Order

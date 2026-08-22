@@ -13,29 +13,31 @@ function CartItemCard({data}) {
         if(currentQty>1){
   dispatch(updateQuantity({id,quantity:currentQty-1}))
         }
-        
+
     }
   return (
-    <div className='flex items-center justify-between bg-white p-4 rounded-xl shadow border'>
-      <div className='flex items-center gap-4'>
-        <img src={data.image} alt="" className='w-20 h-20 object-cover rounded-lg border'/>
-        <div>
-            <h1 className='font-medium text-gray-800'>{data.name}</h1>
-            <p className='text-sm text-gray-500'>₹{data.price} x {data.quantity}</p>
-            <p className="font-bold text-gray-900">₹{data.price*data.quantity}</p>
+    <div className='flex items-center justify-between gap-3 bg-white p-3.5 sm:p-4 rounded-2xl shadow-soft border border-black/[0.05]'>
+      <div className='flex items-center gap-4 min-w-0'>
+        <img src={data.image} alt="" className='w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-xl ring-1 ring-black/[0.06] shrink-0'/>
+        <div className='min-w-0'>
+            <h1 className='font-bold text-ink-900 truncate'>{data.name}</h1>
+            <p className='text-sm text-ink-500'>₹{data.price} × {data.quantity}</p>
+            <p className="font-extrabold text-ink-900">₹{data.price*data.quantity}</p>
         </div>
       </div>
-      <div className='flex items-center gap-3'>
-        <button className='p-2 cursor-pointer bg-gray-100 rounded-full hover:bg-gray-200' onClick={()=>handleDecrease(data.id,data.quantity)}>
-        <FaMinus size={12}/>
-        </button>
-        <span>{data.quantity}</span>
-        <button className='p-2 cursor-pointer bg-gray-100 rounded-full hover:bg-gray-200'  onClick={()=>handleIncrease(data.id,data.quantity)}>
-        <FaPlus size={12}/>
-        </button>
-        <button className="p-2 bg-red-100 text-red-600 rounded-full hover:bg-red-200"
+      <div className='flex items-center gap-2 shrink-0'>
+        <div className='flex items-center rounded-full border border-gray-200 overflow-hidden bg-white'>
+          <button aria-label="Decrease" className='p-2.5 text-ink-700 hover:bg-gray-50 transition' onClick={()=>handleDecrease(data.id,data.quantity)}>
+          <FaMinus size={11}/>
+          </button>
+          <span className='w-6 text-center text-sm font-bold'>{data.quantity}</span>
+          <button aria-label="Increase" className='p-2.5 text-ink-700 hover:bg-gray-50 transition'  onClick={()=>handleIncrease(data.id,data.quantity)}>
+          <FaPlus size={11}/>
+          </button>
+        </div>
+        <button aria-label="Remove item" className="p-2.5 bg-red-50 text-red-500 rounded-full hover:bg-red-100 transition"
  onClick={()=>dispatch(removeCartItem(data.id))}>
-<CiTrash size={18}/>
+<CiTrash size={17}/>
         </button>
       </div>
     </div>
