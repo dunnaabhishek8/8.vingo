@@ -24,7 +24,7 @@ const shopOrderSchema = new mongoose.Schema({
     shopOrderItems: [shopOrderItemSchema],
     status:{
         type:String,
-        enum:["pending","preparing","out of delivery","delivered"],
+        enum:["pending","preparing","out of delivery","delivered","cancelled"],
         default:"pending"
     },
   assignment:{
@@ -47,6 +47,10 @@ otpExpires:{
 deliveredAt:{
     type:Date,
     default:null
+},
+cancelledAt:{
+    type:Date,
+    default:null
 }
 
 }, { timestamps: true })
@@ -66,6 +70,22 @@ const orderSchema = new mongoose.Schema({
         latitude: Number,
         longitude: Number
     },
+    subtotal:{
+        type:Number,
+        default:0
+    },
+    deliveryFee:{
+        type:Number,
+        default:0
+    },
+    discountAmount:{
+        type:Number,
+        default:0
+    },
+    couponCode:{
+        type:String,
+        default:""
+    },
     totalAmount: {
         type: Number
     }
@@ -82,8 +102,17 @@ const orderSchema = new mongoose.Schema({
    razorpayPaymentId:{
     type:String,
        default:""
+   },
+   cancelledAt:{
+    type:Date,
+    default:null
    }
 }, { timestamps: true })
+
+// Performance indexes
+orderSchema.index({ user: 1, createdAt: -1 })
+orderSchema.index({ "shopOrders.owner": 1, createdAt: -1 })
+orderSchema.index({ "shopOrders.assignedDeliveryBoy": 1 })
 
 const Order=mongoose.model("Order",orderSchema)
 export default Order

@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "seed": "node seed/seed.js",
+    "seed:coupons": "node seed/coupons.js"
   },
   "author": "Virtual code",
   "license": "ISC",
